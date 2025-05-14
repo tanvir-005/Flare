@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Flare.Models.Event>
+@{
+    var enrollments = ViewBag.Enrollments as List<Flare.Models.EventEnrollment>;
+}
+
+<h2>All Events and Participants</h2>
+@foreach (var ev in Model)
+{
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>@ev.Name</strong> <span class="text-muted">(@ev.Date.ToShortDateString() at @ev.Venue)</span>
+        </div>
+        <div class="card-body">
+            <p>@ev.Description</p>
+            <p><strong>Organizer:</strong> @ev.Organizer?.Name</p>
+            <p><strong>Status:</strong> @ev.Status</p>
+            <p><strong>Capacity:</strong> @ev.Capacity</p>
+            <h5>Participants</h5>
+            @{
+                var eventEnrollments = enrollments
+                .Where(en => en.EventId == ev.Id && en.Status == "Approved")
+                .ToList();
+            }
+            @if (eventEnrollments.Any())
+            {
+                <ul>
+                    @foreach (var en in eventEnrollments)
+                    {
+                        <li>@en.Participant?.Name (@en.Participant?.Email)</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">No participants enrolled.</p>
+            }
+        </div>
+    </div>
+}

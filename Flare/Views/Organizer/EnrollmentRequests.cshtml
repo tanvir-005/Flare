@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Flare.Models.EventEnrollment>
+@{
+    var ev = ViewBag.Event as Flare.Models.Event;
+}
+<h2>Enrollment Requests for @ev.Name</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Participant</th>
+            <th>Status</th>
+            <th>Requested At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model)
+        {
+            <tr>
+                <td>@req.Participant.Name (@req.Participant.Email)</td>
+                <td>@req.Status</td>
+                <td>@req.RequestedAt.ToLocalTime()</td>
+                <td>
+                    @if (req.Status == "Pending")
+                    {
+                        <form asp-action="ApproveEnrollment" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@req.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        <form asp-action="RejectEnrollment" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@req.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

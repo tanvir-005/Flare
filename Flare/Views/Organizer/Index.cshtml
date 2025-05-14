@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Flare.Models.EventViewModel>
+
+<h1 class="d-inline-block">My Events</h1>
+@* <a asp-action="Create" class="btn btn-success float-end mb-3">Create Event</a> *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Venue</th>
+            <th>Capacity</th>
+            <th>Status</th>
+            <th>Participants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @{
+        var events = Model.ToList();
+    }
+    <tbody>
+        @for (int i = 0; i < events.Count; i++)
+        {
+            <tr>
+                <td>@events[i].Name</td>
+                <td>@events[i].Description</td>
+                <td>@events[i].Date.ToShortDateString()</td>
+                <td>@events[i].Time</td>
+                <td>@events[i].Venue</td>
+                <td>@events[i].Capacity</td>
+                <td>@events[i].Status</td>
+                <td>@events[i].ParticipantCount</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@events[i].Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="EnrollmentRequests" asp-route-eventId="@events[i].Id" class="btn btn-info">Enrollments</a>
+                    <button class="btn btn-danger" onclick="confirmDelete(@events[i].Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmDelete(eventId) {
+            if (confirm("Are you sure you want to delete this event?")) {
+                window.location.href = '@Url.Action("Delete", "Organizer")/' + eventId;
+            }
+        }
+    </script>
+}

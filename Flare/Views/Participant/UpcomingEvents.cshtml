@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Flare.Models.Event>
+@{
+    var enrollments = ViewBag.Enrollments as List<Flare.Models.EventEnrollment>;
+}
+<h2>Upcoming Events</h2>
+@if (TempData["Message"] != null)
+{
+     <div class="alert alert-info">@TempData["Message"]</div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Capacity</th>
+            <th>Seats Left</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var e in Model)
+        {
+            var approvedCount = e.Participants?.Count ?? 0;
+            var seatsLeft = e.Capacity - approvedCount;
+            var enrollment = enrollments?.FirstOrDefault(x => x.EventId == e.Id);
+            <tr>
+                <td>@e.Name</td>
+                <td>@e.Date.ToShortDateString()</td>
+                <td>@e.Venue</td>
+                <td>@e.Capacity</td>
+                <td>@seatsLeft</td>
+                <td>
+                    @if (enrollment != null)
+                    {
+                        <span>@enrollment.Status</span>
+                    }
+                    else if (seatsLeft > 0)
+                    {
+                        <form asp-action="RequestEnrollment" method="post">
+                            <input type="hidden" name="eventId" value="@e.Id" />
+                            <button type="submit" class="btn btn-primary btn-sm">Request to Join</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Full</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

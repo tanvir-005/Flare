@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Flare.Models.EventEnrollment>
+<h2>My Enrolled Events</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Enrolled At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Event.Name</td>
+                <td>@e.Event.Date.ToShortDateString()</td>
+                <td>@e.Event.Venue</td>
+                <td>@e.RequestedAt.ToLocalTime()</td>
+            </tr>
+        }
+    </tbody>
+</table>

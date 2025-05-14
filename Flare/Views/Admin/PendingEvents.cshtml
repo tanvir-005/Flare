@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Flare.Models.Event>
+<h2>Pending Event Requests</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Organizer</th>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Name</td>
+                <td>@e.Organizer?.Name</td>
+                <td>@e.Date.ToShortDateString()</td>
+                <td>@e.Venue</td>
+                <td>
+                    <form asp-action="ApproveEvent" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@e.Id" />
+                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                    </form>
+                    <form asp-action="RejectEvent" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@e.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
