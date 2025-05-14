@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Flare")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c3355b3fcc4b8a66276b910bb724c4bb85e84025")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f7d2d5e5f0b9bc0634abc609547e5179fac7304")]
 [assembly: System.Reflection.AssemblyProductAttribute("Flare")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Flare")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
